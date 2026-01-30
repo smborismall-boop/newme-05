@@ -28,6 +28,7 @@ const UserTest = () => {
   const [results, setResults] = useState(null);
   const [walletBalance, setWalletBalance] = useState(0);
   const [hasPaidAccess, setHasPaidAccess] = useState(false);
+  const [hasUsedFreeTest, setHasUsedFreeTest] = useState(false);
   const [testPrice] = useState(50000); // Harga test berbayar
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const UserTest = () => {
       }
       const response = await authAPI.getProfile();
       setUser(response.data);
-      await loadAllData(response.data._id);
+      await loadAllData(response.data._id || response.data.id);
     } catch (error) {
       navigate('/login');
     } finally {
