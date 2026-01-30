@@ -652,6 +652,157 @@ async def seed_questions():
                 "isFree": False,
                 "isActive": True,
                 "createdAt": datetime.utcnow()
+            },
+            # Additional 10 paid questions (31-40) for total 35 paid
+            {
+                "text": "Bagaimana Anda menghadapi deadline yang ketat?",
+                "question": "Bagaimana Anda menghadapi deadline yang ketat?",
+                "category": "skills",
+                "options": [
+                    {"text": "Bekerja lebih keras dan fokus", "value": "A", "score": 4},
+                    {"text": "Delegasi tugas jika memungkinkan", "value": "B", "score": 3},
+                    {"text": "Tetap tenang dan prioritaskan", "value": "C", "score": 2},
+                    {"text": "Negosiasi perpanjangan waktu", "value": "D", "score": 1}
+                ],
+                "order": 31,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Apa yang Anda lakukan ketika ide Anda ditolak?",
+                "question": "Apa yang Anda lakukan ketika ide Anda ditolak?",
+                "category": "personality",
+                "options": [
+                    {"text": "Mencari feedback dan memperbaiki", "value": "A", "score": 4},
+                    {"text": "Mencoba pendekatan berbeda", "value": "B", "score": 3},
+                    {"text": "Menerima dan melanjutkan", "value": "C", "score": 2},
+                    {"text": "Merasa kecewa tapi tidak menyerah", "value": "D", "score": 1}
+                ],
+                "order": 32,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Bagaimana cara Anda membangun hubungan profesional?",
+                "question": "Bagaimana cara Anda membangun hubungan profesional?",
+                "category": "skills",
+                "options": [
+                    {"text": "Aktif networking dan follow up", "value": "A", "score": 4},
+                    {"text": "Memberikan nilai dan bantuan", "value": "B", "score": 3},
+                    {"text": "Menjaga komunikasi rutin", "value": "C", "score": 2},
+                    {"text": "Hadir di event profesional", "value": "D", "score": 1}
+                ],
+                "order": 33,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Apa yang membuat Anda merasa paling produktif?",
+                "question": "Apa yang membuat Anda merasa paling produktif?",
+                "category": "interest",
+                "options": [
+                    {"text": "Target jelas dan terukur", "value": "A", "score": 4},
+                    {"text": "Lingkungan yang tenang", "value": "B", "score": 3},
+                    {"text": "Kolaborasi dengan tim", "value": "C", "score": 2},
+                    {"text": "Kebebasan dalam bekerja", "value": "D", "score": 1}
+                ],
+                "order": 34,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Bagaimana Anda bereaksi saat menerima pujian?",
+                "question": "Bagaimana Anda bereaksi saat menerima pujian?",
+                "category": "personality",
+                "options": [
+                    {"text": "Berterima kasih dengan tulus", "value": "A", "score": 4},
+                    {"text": "Merasa senang tapi merendah", "value": "B", "score": 3},
+                    {"text": "Mengakui kontribusi tim", "value": "C", "score": 2},
+                    {"text": "Merasa canggung atau malu", "value": "D", "score": 1}
+                ],
+                "order": 35,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Apa pendekatan Anda dalam pengambilan risiko?",
+                "question": "Apa pendekatan Anda dalam pengambilan risiko?",
+                "category": "talent",
+                "options": [
+                    {"text": "Kalkulasi matang sebelum bertindak", "value": "A", "score": 4},
+                    {"text": "Berani mengambil risiko terukur", "value": "B", "score": 3},
+                    {"text": "Menghindari risiko besar", "value": "C", "score": 2},
+                    {"text": "Mengikuti insting dan intuisi", "value": "D", "score": 1}
+                ],
+                "order": 36,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Bagaimana cara Anda mengatasi kebosanan?",
+                "question": "Bagaimana cara Anda mengatasi kebosanan?",
+                "category": "interest",
+                "options": [
+                    {"text": "Mencari tantangan baru", "value": "A", "score": 4},
+                    {"text": "Mengembangkan hobi baru", "value": "B", "score": 3},
+                    {"text": "Bersosialisasi dengan orang baru", "value": "C", "score": 2},
+                    {"text": "Merefleksikan dan istirahat", "value": "D", "score": 1}
+                ],
+                "order": 37,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Apa yang Anda utamakan dalam pekerjaan?",
+                "question": "Apa yang Anda utamakan dalam pekerjaan?",
+                "category": "interest",
+                "options": [
+                    {"text": "Passion dan kepuasan batin", "value": "A", "score": 4},
+                    {"text": "Stabilitas dan keamanan finansial", "value": "B", "score": 3},
+                    {"text": "Peluang berkembang", "value": "C", "score": 2},
+                    {"text": "Work-life balance", "value": "D", "score": 1}
+                ],
+                "order": 38,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Bagaimana Anda merespons saat diberi tanggung jawab besar?",
+                "question": "Bagaimana Anda merespons saat diberi tanggung jawab besar?",
+                "category": "talent",
+                "options": [
+                    {"text": "Antusias dan siap menghadapi", "value": "A", "score": 4},
+                    {"text": "Merencanakan dengan detail", "value": "B", "score": 3},
+                    {"text": "Mencari dukungan dan bantuan", "value": "C", "score": 2},
+                    {"text": "Khawatir tapi tetap mencoba", "value": "D", "score": 1}
+                ],
+                "order": 39,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
+            },
+            {
+                "text": "Bagaimana filosofi hidup yang Anda pegang?",
+                "question": "Bagaimana filosofi hidup yang Anda pegang?",
+                "category": "personality",
+                "options": [
+                    {"text": "Kerja keras pasti berbuah hasil", "value": "A", "score": 4},
+                    {"text": "Hidup adalah perjalanan belajar", "value": "B", "score": 3},
+                    {"text": "Kebahagiaan adalah pilihan", "value": "C", "score": 2},
+                    {"text": "Setiap hal terjadi dengan alasan", "value": "D", "score": 1}
+                ],
+                "order": 40,
+                "isFree": False,
+                "isActive": True,
+                "createdAt": datetime.utcnow()
             }
         ]
         
