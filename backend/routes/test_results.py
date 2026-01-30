@@ -261,3 +261,36 @@ async def get_latest_result(user_id: str, test_type: Optional[str] = None):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+
+
+
+@router.get("/check-free-test/{user_id}")
+async def check_free_test_usage(user_id: str):
+    """Check if user has already used their free test"""
+    try:
+        # Check if user has any free test results
+        free_test = await db.test_results.find_one({
+            "userId": user_id,
+            "testType": "free"
+        })
+        
+        # Also check user's freeTestStatus
+        user = None
+        if ObjectId.is_valid(user_id):
+            user = await db.users.find_one({"_id": ObjectId(user_id)})
+        
+        user_completed_free = False
+        if user:
+            user_completed_free = user.get("freeTestStatus") == "completed"
+        
+        has_used = free_test is not None or user_completed_free
+        
+        return {
+            "hasUsedFreeTest": has_used,
+            "message": "Test gratis sudah digunakan" if has_used else "Test gratis tersedia"
+        }
+    except Exception as e:
+        return {
+            "hasUsedFreeTest": False,
+            "message": f"Error checking: {str(e)}"
+        }
