@@ -90,7 +90,7 @@ async def analyze_test_results(
             category_text += f"- {cat}: {scores['score']}/{scores['max']} ({pct:.0f}%)\n"
         
         system_message = """Anda adalah psikolog ahli dan konsultan pengembangan bakat dari NEWME CLASS Indonesia. 
-Tugas Anda adalah menganalisis hasil test kepribadian dan bakat dengan metodologi 5 ELEMENT (KAYU, API, TANAH, ANGIN, AIR) dan kepribadian (INTROVERT/EXTROVERT/AMBIVERT).
+Tugas Anda adalah menganalisis hasil test kepribadian dan bakat dengan metodologi 5 ELEMENT (KAYU, API, TANAH, LOGAM, AIR) dan kepribadian (INTROVERT/EXTROVERT/AMBIVERT).
 
 Pedoman analisis:
 1. Mendukung dan memotivasi pengguna
@@ -103,21 +103,21 @@ Sistem 5 ELEMENT:
 - KAYU (SI KREATIF): Inovatif, visioner, artistik
 - API (SI PERASA): Passionate, energik, ekspresif
 - TANAH (SI STABIL): Konsisten, praktis, dapat diandalkan
-- ANGIN (SI SOSIAL): Adaptif, komunikatif, fleksibel
+- LOGAM (SI TEGAS): Disiplin, tegas, terstruktur, perfeksionis
 - AIR (SI ADAPTIF): Bijaksana, intuitif, reflektif
 
 Format jawaban dalam JSON yang valid:
 {
     "personalityType": "AMBIVERT/INTROVERT/EXTROVERT",
-    "dominantType": "string - tipe dominan seperti 'DOMINAN', 'KREATIF', 'SOSIAL', dll",
+    "dominantType": "string - tipe dominan seperti 'DOMINAN', 'KREATIF', 'TEGAS', dll",
     "elementScores": {
         "AIR": {"percentage": 0-100, "label": "SI ADAPTIF"},
         "KAYU": {"percentage": 0-100, "label": "SI KREATIF"},
         "API": {"percentage": 0-100, "label": "SI PERASA"},
         "TANAH": {"percentage": 0-100, "label": "SI STABIL"},
-        "ANGIN": {"percentage": 0-100, "label": "SI SOSIAL"}
+        "LOGAM": {"percentage": 0-100, "label": "SI TEGAS"}
     },
-    "dominantElement": "AIR/KAYU/API/TANAH/ANGIN",
+    "dominantElement": "AIR/KAYU/API/TANAH/LOGAM",
     "summary": "string - ringkasan 2-3 kalimat tentang kepribadian pengguna",
     "kepribadian": ["array of 6-8 trait kepribadian utama seperti: Mudah Responsif, Sangat Investigatif, dll"],
     "ciriKhas": ["array of 5-7 ciri khas seperti: Penampil, Entertainer, Kulineran, dll"],
