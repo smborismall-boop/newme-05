@@ -125,6 +125,16 @@ const UserTest = () => {
   };
 
   const startFreeTest = () => {
+    // Check if user already used free test
+    if (hasUsedFreeTest) {
+      toast({
+        title: 'Test Gratis Sudah Digunakan',
+        description: 'Anda sudah pernah mengambil test gratis. Silakan upgrade ke Test Premium untuk analisis lengkap.',
+        variant: 'destructive'
+      });
+      return;
+    }
+    
     if (freeQuestions.length === 0) {
       toast({
         title: 'Tidak Ada Pertanyaan',
