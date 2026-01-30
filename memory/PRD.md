@@ -1,13 +1,14 @@
 # NEWMECLASS Website - PRD
 
 ## Original Problem Statement
-User ingin menambahkan slider yang cocok dengan tema website NEWMECLASS dan menambahkan elemen agar website tidak terlihat kosong. Referensi desain dari Canva dengan tema warna kuning/gold dan olive/abu-abu.
+Deploy website dari GitHub: https://github.com/smborismall-boop/newme-03
+Kemudian fix: pertanyaan gratis dan berbayar belum muncul, tambahkan pertanyaan berbayar menjadi 35, include AI analyst lengkap dan fitur download sertifikat.
 
 ## Architecture & Tech Stack
-- **Frontend**: React.js with Tailwind CSS
+- **Frontend**: React.js with Tailwind CSS + Shadcn UI
 - **Backend**: FastAPI (Python)
 - **Database**: MongoDB
-- **UI Components**: Shadcn UI
+- **AI Integration**: GPT-4o via Emergent LLM Key
 
 ## User Personas
 1. **Siswa/Mahasiswa** - mencari test kepribadian dan bakat
@@ -17,54 +18,40 @@ User ingin menambahkan slider yang cocok dengan tema website NEWMECLASS dan mena
 ## Core Requirements (Static)
 - Website company profile untuk NEWMECLASS
 - Slider/carousel untuk menampilkan informasi perusahaan
-- Section tentang produk dan layanan
-- Testimonial dari klien
-- Informasi visi misi dan kegiatan
 - Test kepribadian (gratis & berbayar)
+- AI Analysis menggunakan GPT-4o
 - Sistem wallet untuk pembayaran
 - Sertifikat digital untuk test berbayar
 
 ## What's Been Implemented
 
-### Jan 30, 2026 Updates:
-1. **Questions System** - 30 pertanyaan total (5 gratis + 25 berbayar)
-2. **Test Results Page** - Halaman hasil test lengkap dengan:
-   - Analisis per kategori (personality, talent, skills, interest)
-   - Kekuatan & Area pengembangan
-   - Rekomendasi karir
-   - Ringkasan kepribadian
-   - Progress bar visual
-3. **Bug Fixes** - Fixed user._id issue (changed to user.id || user._id)
+### Jan 30, 2026 - Latest Updates:
+1. **Repository Cloned & Deployed** from GitHub
+2. **Questions System Updated** - 40 pertanyaan total:
+   - 5 pertanyaan GRATIS
+   - 35 pertanyaan BERBAYAR
+3. **AI Analysis Integrated** - GPT-4o via Emergent LLM Key
+   - Analisis kepribadian 5 ELEMENT (KAYU, API, TANAH, ANGIN, AIR)
+   - INTROVERT/EXTROVERT/AMBIVERT detection
+   - Detailed career recommendations
+4. **Certificate Download** - PDF generation for paid users
+   - 2-page certificate with detailed analysis
+   - Formatted like NEWME CLASS official template
+5. **Test Credentials Created**:
+   - Email: testuser@newmeclass.com
+   - Password: password123
 
-### Previous Updates (Jan 2026):
-1. **HeroCarousel.jsx** - Hero slider dengan 4 slides
-2. **AboutSection.jsx** - Section "Siapa Kami"
-3. **ProductSlider.jsx** - Slider produk usaha dengan 6 produk
-4. **ServicesSection.jsx** - Section produk jasa (B2B dan B2C)
-5. **TestimonialSlider.jsx** - Slider testimonial
-6. **BenefitsSection.jsx** - 5 benefits untuk klien
-7. **ActivitiesSection.jsx** - 4 kegiatan
-8. **VisiMisiSection.jsx** - Visi dan Misi NEWMECLASS
-
-### Design Theme Applied:
-- Primary Color: #D4A017 (Gold/Yellow)
-- Secondary Color: #5A5A4A (Olive/Gray)
-- Dark Background: #1a1a1a, #2a2a2a
+### API Endpoints Working:
+- `GET /api/questions` - All 40 questions
+- `GET /api/questions?testType=free` - 5 free questions
+- `GET /api/questions?testType=paid` - 35 paid questions
+- `POST /api/ai-analysis/analyze` - AI-powered analysis
+- `GET /api/certificates/check-eligibility` - Check download eligibility
+- `GET /api/certificates/download-ai-certificate` - Download PDF certificate
 
 ## Testing Status
-- **Backend**: 100% passed (20/20 tests)
-- **Frontend**: 100% (all UI flows working)
-- **Test User**: testuser@newmeclass.com / password123
-- **Admin User**: admin@newmeclass.com / admin123
-
-## Key API Endpoints
-- `GET /api/questions` - Get all questions (30 total)
-- `GET /api/questions?testType=free` - Get 5 free questions
-- `GET /api/questions?testType=paid` - Get 25 paid questions
-- `POST /api/test-results` - Save test results
-- `GET /api/test-results/{id}` - Get specific result
-- `GET /api/wallet/balance/{userId}` - Get wallet balance
-- `POST /api/wallet/demo-topup` - Demo top-up (MOCKED)
+- **Backend**: 100% passed (questions, auth, certificates API)
+- **Frontend**: 100% working (carousel, forms, navigation)
 
 ## Mocked APIs
 - **Midtrans QRIS Payment** - demo-topup endpoint simulates payment without real integration
@@ -72,24 +59,21 @@ User ingin menambahkan slider yang cocok dengan tema website NEWMECLASS dan mena
 ## Prioritized Backlog
 
 ### P0 (Critical) - DONE ✅
-- [x] Hero Carousel
-- [x] All homepage sections
-- [x] Questions system (5 free + 25 paid)
-- [x] Test taking flow
-- [x] Test results page with detailed analysis
-- [x] Wallet system (demo mode)
+- [x] Clone & deploy from GitHub
+- [x] Questions system (5 free + 35 paid = 40 total)
+- [x] AI Analysis integration with GPT-4o
+- [x] Certificate download for paid users
+- [x] User registration & login
 
 ### P1 (High Priority) - Pending
-- [ ] Partner/Mitra logo carousel
 - [ ] Real Midtrans QRIS payment integration
-- [ ] Digital certificate download for paid users
+- [ ] Admin dashboard improvements
 
 ### P2 (Medium Priority)
-- [ ] AI-powered personality analysis integration
+- [ ] Partner logos carousel
 - [ ] Animation improvements
-- [ ] Director message section
 
 ## Next Tasks
-1. Implement partner logos carousel on homepage
-2. Integrate real Midtrans payment (requires API keys)
-3. Enable certificate download for paid test completers
+1. User dapat melakukan test gratis dan mendapat hasil dasar
+2. Upgrade ke test berbayar untuk analisis AI lengkap
+3. Download sertifikat setelah pembayaran disetujui
