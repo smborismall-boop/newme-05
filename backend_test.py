@@ -98,7 +98,7 @@ class NewmeClassAPITester:
             "birthDate": "1990-01-01",
             "whatsapp": "081234567890",
             "userType": "individual",
-            "referralSource": "testing",
+            "referralSource": "google",  # Fixed: use valid enum value
             "province": "DKI Jakarta",
             "city": "Jakarta Selatan",
             "district": "Kebayoran Baru",
