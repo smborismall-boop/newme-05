@@ -35,7 +35,8 @@ const PersonalityTestResult = () => {
       kayu: '🌳',
       air: '💧',
       tanah: '⛰️',
-      angin: '🌪️'
+      logam: '⚙️',
+      api: '🔥'
     };
     return icons[personalityType] || '✨';
   };
@@ -48,7 +49,8 @@ const PersonalityTestResult = () => {
       kayu: 'from-green-600 to-emerald-500',
       air: 'from-blue-500 to-cyan-400',
       tanah: 'from-amber-600 to-yellow-600',
-      angin: 'from-cyan-400 to-blue-300'
+      logam: 'from-gray-400 to-slate-500',
+      api: 'from-red-500 to-orange-500'
     };
     return colors[personalityType] || 'from-yellow-400 to-orange-500';
   };
