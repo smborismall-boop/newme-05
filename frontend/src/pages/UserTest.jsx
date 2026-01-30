@@ -254,11 +254,16 @@ const UserTest = () => {
     // Save results to backend
     try {
       const saveResponse = await axios.post(`${BACKEND_URL}/api/test-results`, {
-        userId: user._id,
+        userId: user._id || user.id,
         testType,
         results: result,
         answers
       });
+      
+      // Mark free test as used
+      if (testType === 'free') {
+        setHasUsedFreeTest(true);
+      }
       
       // Redirect to result page with the result ID
       if (saveResponse.data.resultId) {
