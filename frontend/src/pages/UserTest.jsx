@@ -76,9 +76,17 @@ const UserTest = () => {
       // Check paid access
       try {
         const paymentRes = await axios.get(`${BACKEND_URL}/api/user-payments/status/${userId}`);
-        setHasPaidAccess(paymentRes.data.status === 'paid' || paymentRes.data.status === 'approved');
+        setHasPaidAccess(paymentRes.data.status === 'paid' || paymentRes.data.hasPaidAccess === true);
       } catch (e) {
         setHasPaidAccess(false);
+      }
+      
+      // Check if user already used free test
+      try {
+        const freeTestRes = await axios.get(`${BACKEND_URL}/api/test-results/check-free-test/${userId}`);
+        setHasUsedFreeTest(freeTestRes.data.hasUsedFreeTest === true);
+      } catch (e) {
+        setHasUsedFreeTest(false);
       }
     } catch (error) {
       console.error('Failed to load data:', error);
