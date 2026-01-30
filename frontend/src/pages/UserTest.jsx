@@ -361,12 +361,22 @@ const UserTest = () => {
                 </ul>
                 <Button 
                   onClick={startFreeTest}
-                  disabled={freeQuestions.length === 0}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  disabled={freeQuestions.length === 0 || hasUsedFreeTest}
+                  className={`w-full ${hasUsedFreeTest ? 'bg-gray-600 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'} text-white`}
                 >
-                  {freeQuestions.length > 0 ? 'Mulai Test Gratis' : 'Pertanyaan Tidak Tersedia'}
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  {hasUsedFreeTest ? (
+                    <>Sudah Digunakan <CheckCircle className="w-4 h-4 ml-2" /></>
+                  ) : freeQuestions.length > 0 ? (
+                    <>Mulai Test Gratis <ArrowRight className="w-4 h-4 ml-2" /></>
+                  ) : (
+                    'Pertanyaan Tidak Tersedia'
+                  )}
                 </Button>
+                {hasUsedFreeTest && (
+                  <p className="text-yellow-400 text-xs mt-2 text-center">
+                    Upgrade ke Test Premium untuk analisis lengkap
+                  </p>
+                )}
               </CardContent>
             </Card>
 
@@ -379,8 +389,8 @@ const UserTest = () => {
                   </div>
                   <div>
                     <CardTitle className="text-white">Test Berbayar Premium</CardTitle>
-                    <CardDescription className="text-yellow-400">
-                      {hasPaidAccess ? 'SUDAH DIBAYAR' : formatCurrency(testPrice)}
+                    <CardDescription className={hasPaidAccess ? "text-green-400 font-semibold" : "text-yellow-400"}>
+                      {hasPaidAccess ? '✓ SUDAH DIBAYAR' : formatCurrency(testPrice)}
                     </CardDescription>
                   </div>
                 </div>
@@ -403,14 +413,14 @@ const UserTest = () => {
                 <Button 
                   onClick={startPaidTest}
                   disabled={paidQuestions.length === 0}
-                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-black"
+                  className={`w-full ${hasPaidAccess ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-400 hover:bg-yellow-500'} text-black`}
                 >
                   {hasPaidAccess ? (
-                    <>Mulai Test Berbayar <ArrowRight className="w-4 h-4 ml-2" /></>
+                    <>Mulai Test Premium <ArrowRight className="w-4 h-4 ml-2" /></>
                   ) : walletBalance >= testPrice ? (
                     <>Bayar & Mulai Test <ArrowRight className="w-4 h-4 ml-2" /></>
                   ) : (
-                    <>Saldo Tidak Cukup <Lock className="w-4 h-4 ml-2" /></>
+                    <>Top Up Dulu <Lock className="w-4 h-4 ml-2" /></>
                   )}
                 </Button>
                 {!hasPaidAccess && walletBalance < testPrice && (
