@@ -440,6 +440,56 @@ async def get_test_price():
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
 
 
+@router.get("/status/{user_id}", response_model=dict)
+async def get_payment_status(user_id: str):
+    """
+    Check if user has paid for premium test access
+    """
+    try:
+        # Check from multiple sources
+        
+        # 1. Check payment_proofs collection for approved payments
+        approved_payment = await db.payment_proofs.find_one({
+            "userId": user_id,
+            "status": {"$in": ["approved", "paid", "settlement"]}
+        })
+        
+        # 2. Check payments collection
+        payment = await db.payments.find_one({
+            "userId": user_id,
+            "status": {"$in": ["approved", "paid", "settlement"]}
+        })
+        
+        # 3. Check user's paymentStatus field
+        user = await db.users.find_one({"_id": ObjectId(user_id)})
+        user_paid = False
+        if user:
+            user_paid = user.get("paymentStatus") in ["approved", "paid"] or \
+                        user.get("paidTestStatus") == "completed" or \
+                        user.get("hasPaidAccess") == True
+        
+        # 4. Check wallet transactions for test payments
+        wallet_payment = await db.wallet_transactions.find_one({
+            "userId": user_id,
+            "type": "test_payment",
+            "status": {"$in": ["success", "completed"]}
+        })
+        
+        has_paid = approved_payment is not None or payment is not None or user_paid or wallet_payment is not None
+        
+        return {
+            "status": "paid" if has_paid else "unpaid",
+            "hasPaidAccess": has_paid,
+            "message": "User memiliki akses test premium" if has_paid else "User belum membayar"
+        }
+    except Exception as e:
+        return {
+            "status": "unpaid",
+            "hasPaidAccess": False,
+            "message": f"Error checking status: {str(e)}"
+        }
+
+
 @router.post("/midtrans-notification", response_model=dict)
 async def midtrans_notification_handler(notification: dict):
     """
