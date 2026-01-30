@@ -25,7 +25,7 @@ element_questions = [
             {"text": "Mencari dukungan dari orang lain dan bekerja sama", "score": {"tanah": 3}},
             {"text": "Mengambil tindakan cepat dan tegas", "score": {"api": 3}},
             {"text": "Berpikir kreatif dan mencari cara inovatif", "score": {"kayu": 3}},
-            {"text": "Menunggu situasi berkembang sambil mengamati", "score": {"angin": 3}}
+            {"text": "Menunggu situasi berkembang sambil mengamati", "score": {"logam": 3}}
         ],
         "type": "multiple_choice",
         "order": 1
@@ -35,7 +35,7 @@ element_questions = [
         "question": "Dalam bekerja, saya paling merasa nyaman ketika:",
         "options": [
             {"text": "Ada struktur dan sistem yang jelas", "score": {"tanah": 3}},
-            {"text": "Bisa bergerak bebas dan fleksibel", "score": {"angin": 3}},
+            {"text": "Bisa bergerak bebas dan fleksibel", "score": {"logam": 3}},
             {"text": "Ada tantangan yang memicu semangat", "score": {"api": 3}},
             {"text": "Bisa mengeksplorasi ide-ide baru", "score": {"kayu": 3}},
             {"text": "Dapat berpikir mendalam dan fokus", "score": {"air": 3}}
@@ -48,7 +48,7 @@ element_questions = [
         "question": "Saya menggambarkan diri saya sebagai orang yang:",
         "options": [
             {"text": "Tenang, stabil, dan dapat diandalkan", "score": {"tanah": 3}},
-            {"text": "Dinamis, adaptif, dan mudah bergaul", "score": {"angin": 3}},
+            {"text": "Dinamis, adaptif, dan mudah bergaul", "score": {"logam": 3}},
             {"text": "Passionate, energik, dan berani", "score": {"api": 3}},
             {"text": "Kreatif, inovatif, dan visioner", "score": {"kayu": 3}},
             {"text": "Bijaksana, intuitif, dan reflektif", "score": {"air": 3}}
@@ -61,7 +61,7 @@ element_questions = [
         "question": "Dalam mengambil keputusan, saya lebih mengandalkan:",
         "options": [
             {"text": "Data dan fakta yang konkret", "score": {"tanah": 2, "air": 1}},
-            {"text": "Intuisi dan feeling", "score": {"angin": 2, "air": 1}},
+            {"text": "Intuisi dan feeling", "score": {"logam": 2, "air": 1}},
             {"text": "Insting dan keberanian", "score": {"api": 3}},
             {"text": "Visi jangka panjang", "score": {"kayu": 2, "air": 1}},
             {"text": "Analisis mendalam dan pertimbangan", "score": {"air": 3}}
@@ -74,7 +74,7 @@ element_questions = [
         "question": "Lingkungan kerja yang ideal bagi saya adalah:",
         "options": [
             {"text": "Teratur, terstruktur, dan predictable", "score": {"tanah": 3}},
-            {"text": "Dinamis, variatif, dan selalu berubah", "score": {"angin": 3}},
+            {"text": "Dinamis, variatif, dan selalu berubah", "score": {"logam": 3}},
             {"text": "Kompetitif dan menantang", "score": {"api": 3}},
             {"text": "Kreatif dan mendorong inovasi", "score": {"kayu": 3}},
             {"text": "Tenang dan memungkinkan refleksi", "score": {"air": 3}}
@@ -87,7 +87,7 @@ element_questions = [
         "question": "Ketika stress, saya cenderung:",
         "options": [
             {"text": "Menjadi kaku dan sulit berubah", "score": {"tanah": 3}},
-            {"text": "Menjadi gelisah dan tidak fokus", "score": {"angin": 3}},
+            {"text": "Menjadi gelisah dan tidak fokus", "score": {"logam": 3}},
             {"text": "Menjadi reaktif dan mudah marah", "score": {"api": 3}},
             {"text": "Overthinking dan terlalu idealis", "score": {"kayu": 3}},
             {"text": "Menarik diri dan terlalu banyak berpikir", "score": {"air": 3}}
@@ -100,7 +100,7 @@ element_questions = [
         "question": "Cara berkomunikasi saya biasanya:",
         "options": [
             {"text": "To the point, jelas, dan praktis", "score": {"tanah": 3}},
-            {"text": "Ramah, ringan, dan mudah berganti topik", "score": {"angin": 3}},
+            {"text": "Ramah, ringan, dan mudah berganti topik", "score": {"logam": 3}},
             {"text": "Tegas, langsung, dan penuh semangat", "score": {"api": 3}},
             {"text": "Inspiratif dan penuh ide", "score": {"kayu": 3}},
             {"text": "Mendalam dan penuh makna", "score": {"air": 3}}
@@ -113,7 +113,7 @@ element_questions = [
         "question": "Saya paling termotivasi oleh:",
         "options": [
             {"text": "Keamanan dan stabilitas", "score": {"tanah": 3}},
-            {"text": "Kebebasan dan variasi", "score": {"angin": 3}},
+            {"text": "Kebebasan dan variasi", "score": {"logam": 3}},
             {"text": "Pencapaian dan kemenangan", "score": {"api": 3}},
             {"text": "Pertumbuhan dan pengembangan", "score": {"kayu": 3}},
             {"text": "Pemahaman dan kebijaksanaan", "score": {"air": 3}}
@@ -126,7 +126,7 @@ element_questions = [
         "question": "Dalam tim, peran saya biasanya:",
         "options": [
             {"text": "Penjaga konsistensi dan kualitas", "score": {"tanah": 3}},
-            {"text": "Penghubung dan komunikator", "score": {"angin": 3}},
+            {"text": "Penghubung dan komunikator", "score": {"logam": 3}},
             {"text": "Pemimpin dan pengambil keputusan", "score": {"api": 3}},
             {"text": "Visioner dan innovator", "score": {"kayu": 3}},
             {"text": "Pemikir strategis dan advisor", "score": {"air": 3}}
@@ -139,7 +139,7 @@ element_questions = [
         "question": "Hobi atau aktivitas yang saya nikmati:",
         "options": [
             {"text": "Kegiatan rutin yang memberikan hasil nyata", "score": {"tanah": 3}},
-            {"text": "Bertemu orang baru dan traveling", "score": {"angin": 3}},
+            {"text": "Bertemu orang baru dan traveling", "score": {"logam": 3}},
             {"text": "Olahraga kompetitif atau aktivitas menantang", "score": {"api": 3}},
             {"text": "Seni, musik, atau kreativitas", "score": {"kayu": 3}},
             {"text": "Membaca, menulis, atau meditasi", "score": {"air": 3}}

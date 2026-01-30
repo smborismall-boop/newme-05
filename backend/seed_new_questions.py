@@ -77,7 +77,7 @@ free_questions = [
                 "text": "Diskusi dengan orang lain untuk input",
                 "scores": {
                     "sosial": 5,
-                    "angin": 3,
+                    "logam": 3,
                     "komunikasi": 3
                 }
             },
@@ -203,7 +203,7 @@ free_questions = [
             {
                 "text": "Penghubung yang menjaga harmoni",
                 "scores": {
-                    "angin": 4,
+                    "logam": 4,
                     "sosial": 5,
                     "empati": 5,
                     "extrovert": 3
@@ -256,7 +256,7 @@ paid_questions = [
             {"text": "Menjadi reaktif dan mudah marah/emosional", "scores": {"api": 8, "extrovert": 5}},
             {"text": "Menarik diri dan overthinking", "scores": {"air": 8, "introvert": 7, "analitik": 5}},
             {"text": "Menjadi kaku dan sulit beradaptasi", "scores": {"tanah": 8, "konvensional": 5}},
-            {"text": "Gelisah dan tidak bisa fokus", "scores": {"angin": 8, "extrovert": 4}},
+            {"text": "Gelisah dan tidak bisa fokus", "scores": {"logam": 8, "extrovert": 4}},
             {"text": "Terlalu idealis dan kecewa dengan realita", "scores": {"kayu": 8, "artistik": 5}}
         ],
         "type": "multiple_choice",
@@ -269,7 +269,7 @@ paid_questions = [
         "question": "Cara berkomunikasi saya biasanya:",
         "options": [
             {"text": "To the point, jelas, dan praktis", "scores": {"tanah": 7, "praktis": 6, "komunikasi": 5}},
-            {"text": "Ramah, ringan, dan mudah berganti topik", "scores": {"angin": 7, "extrovert": 6, "sosial": 5}},
+            {"text": "Ramah, ringan, dan mudah berganti topik", "scores": {"logam": 7, "extrovert": 6, "sosial": 5}},
             {"text": "Tegas, langsung, dan penuh semangat", "scores": {"api": 7, "enterprising": 6, "extrovert": 5}},
             {"text": "Inspiratif dan penuh ide-ide baru", "scores": {"kayu": 7, "artistik": 6, "komunikasi": 5}},
             {"text": "Mendalam, penuh makna, dan thoughtful", "scores": {"air": 7, "introvert": 6, "empati": 5}}
@@ -298,7 +298,7 @@ paid_questions = [
         "question": "Circle pertemanan saya:",
         "options": [
             {"text": "Kecil tapi sangat dekat dan dalam", "scores": {"introvert": 8, "air": 6, "empati": 6}},
-            {"text": "Luas dengan banyak kenalan dari berbagai circle", "scores": {"extrovert": 8, "angin": 6, "sosial": 6}},
+            {"text": "Luas dengan banyak kenalan dari berbagai circle", "scores": {"extrovert": 8, "logam": 6, "sosial": 6}},
             {"text": "Beberapa teman dekat + network profesional luas", "scores": {"enterprising": 7, "extrovert": 5, "sosial": 5}},
             {"text": "Selective, hanya dengan orang yang satu visi", "scores": {"introvert": 6, "kayu": 5, "investigatif": 5}}
         ],
@@ -378,7 +378,7 @@ paid_questions = [
         "question": "Lingkungan kerja ideal saya:",
         "options": [
             {"text": "Office terstruktur dengan sistem jelas", "scores": {"konvensional": 8, "analitik": 6, "tanah": 6}},
-            {"text": "Tempat dengan banyak interaksi dan kolaborasi", "scores": {"sosial": 8, "extrovert": 7, "angin": 6}},
+            {"text": "Tempat dengan banyak interaksi dan kolaborasi", "scores": {"sosial": 8, "extrovert": 7, "logam": 6}},
             {"text": "Workshop, lapangan, atau hands-on environment", "scores": {"praktis": 8, "kinestetik": 8}},
             {"text": "Studio kreatif yang inspiratif", "scores": {"artistik": 8, "visual": 7, "kayu": 6}},
             {"text": "Dinamis, kompetitif, fast-paced", "scores": {"enterprising": 8, "api": 7, "extrovert": 6}},
@@ -477,7 +477,7 @@ paid_questions = [
         "category": "values",
         "question": "Yang paling penting bagi saya dalam hidup:",
         "options": [
-            {"text": "Kebebasan dan fleksibilitas", "scores": {"angin": 8, "kayu": 7, "artistik": 6}},
+            {"text": "Kebebasan dan fleksibilitas", "scores": {"logam": 8, "kayu": 7, "artistik": 6}},
             {"text": "Stabilitas dan keamanan finansial", "scores": {"tanah": 9, "konvensional": 7}},
             {"text": "Membuat impact dan membantu banyak orang", "scores": {"sosial": 9, "empati": 8, "air": 7}},
             {"text": "Pencapaian dan pengakuan", "scores": {"api": 8, "enterprising": 8, "extrovert": 6}},
@@ -510,7 +510,7 @@ paid_questions = [
         "options": [
             {"text": "Work IS life - saya passionate dengan pekerjaan", "scores": {"api": 7, "enterprising": 8, "kayu": 6}},
             {"text": "Balance ketat - butuh time untuk recharge", "scores": {"introvert": 7, "air": 6, "tanah": 5}},
-            {"text": "Flexible - tergantung project dan mood", "scores": {"angin": 7, "artistik": 6, "extrovert": 4}},
+            {"text": "Flexible - tergantung project dan mood", "scores": {"logam": 7, "artistik": 6, "extrovert": 4}},
             {"text": "Prioritas life - work hanya means to an end", "scores": {"tanah": 7, "konvensional": 6}}
         ],
         "type": "multiple_choice",
@@ -592,7 +592,7 @@ async def seed_new_questions():
         print("\n🎉 Question system created successfully!")
         print("\n💡 Scoring Dimensions:")
         print("  PERSONALITY: introvert, extrovert")
-        print("  5 ELEMENTS: kayu, api, tanah, angin, air")
+        print("  5 ELEMENTS: kayu, api, tanah, logam, air")
         print("  INTERESTS: analitik, sosial, praktis, artistik, enterprising, investigatif, konvensional")
         print("  TALENTS: komunikasi, empati, kinestetik, logika, musikal, visual")
         
