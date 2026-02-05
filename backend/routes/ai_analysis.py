@@ -98,18 +98,32 @@ Pedoman analisis:
 3. Spesifik untuk konteks Indonesia
 4. Menggunakan bahasa Indonesia yang baik dan friendly
 5. Berikan persentase untuk setiap elemen berdasarkan jawaban
+6. PENTING: Tentukan 1 dari 9 HASIL KATEGORI berdasarkan kombinasi kepribadian dan elemen dominan
+
+9 KATEGORI HASIL:
+1. EXTROVERT-KAYU (eK): Si Kreatif Ekspresif - Inovatif, visioner, suka tampil beda
+2. EXTROVERT-API (eA): Si Perasa Hangat - Passionate, penuh energi, hangat kepada semua
+3. EXTROVERT-TANAH (eT): Si Stabil Terbuka - Konsisten, praktis, dapat diandalkan, ramah
+4. INTROVERT-KAYU (iK): Si Kreatif Mendalam - Inovatif dalam ketenangan, penuh gagasan
+5. INTROVERT-API (iA): Si Perasa Dalam - Empatik mendalam, penuh cinta, hangat
+6. INTROVERT-TANAH (iT): Si Stabil Tenang - Konsisten, praktis, dapat diandalkan, tenang
+7. AMBIVERT-LOGAM (aL): Si Tegas Seimbang - Disiplin, terstruktur, fleksibel
+8. AMBIVERT-AIR (aAi): Si Adaptif Seimbang - Bijaksana, intuitif, mudah menyesuaikan
+9. AMBIVERT-TANAH (aT): Si Stabil Fleksibel - Konsisten namun adaptif
 
 Sistem 5 ELEMENT:
-- KAYU (SI KREATIF): Inovatif, visioner, artistik
-- API (SI PERASA): Passionate, energik, ekspresif
-- TANAH (SI STABIL): Konsisten, praktis, dapat diandalkan
-- LOGAM (SI TEGAS): Disiplin, tegas, terstruktur, perfeksionis
-- AIR (SI ADAPTIF): Bijaksana, intuitif, reflektif
+- KAYU (SI KREATIF): Inovatif, visioner, artistik, KAYA GAGASAN, pencernaan
+- API (SI PERASA): Passionate, energik, ekspresif, PENYAMPAI, pernafasan  
+- TANAH (SI STABIL): Konsisten, praktis, dapat diandalkan, PENGGERAK, pencernaan
+- LOGAM (SI TEGAS): Disiplin, tegas, terstruktur, perfeksionis, PENCERNA, kulit
+- AIR (SI ADAPTIF): Bijaksana, intuitif, reflektif, PENENANG, ginjal
 
 Format jawaban dalam JSON yang valid:
 {
     "personalityType": "AMBIVERT/INTROVERT/EXTROVERT",
-    "dominantType": "string - tipe dominan seperti 'DOMINAN', 'KREATIF', 'TEGAS', dll",
+    "dominantType": "string - tipe dominan seperti 'SI KREATIF', 'SI PERASA', 'SI STABIL', 'SI TEGAS', 'SI ADAPTIF'",
+    "resultCategory": "string - kategori hasil (eK/eA/eT/iK/iA/iT/aL/aAi/aT)",
+    "resultCategoryName": "string - nama lengkap kategori hasil",
     "elementScores": {
         "AIR": {"percentage": 0-100, "label": "SI ADAPTIF"},
         "KAYU": {"percentage": 0-100, "label": "SI KREATIF"},
