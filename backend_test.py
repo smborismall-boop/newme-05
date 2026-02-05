@@ -325,11 +325,23 @@ class NewmeClassAPITester:
         # Basic health check
         self.test_health_check()
         
+        # Test price endpoints (public)
+        self.test_get_test_price()
+        
+        # Payment status check (public)
+        self.test_payment_status_check()
+        
+        # Free test usage check (public)
+        self.test_check_free_test_usage()
+        
         # Authentication tests
         reg_success, reg_response = self.test_user_registration()
         if not reg_success:
             # Try login with existing user if registration fails
             self.test_user_login()
+        
+        # Admin-only test price update (requires admin token)
+        self.test_update_test_price()
         
         # Questions API tests
         self.test_get_all_questions()
