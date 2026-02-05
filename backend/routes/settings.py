@@ -230,3 +230,56 @@ async def delete_banner(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+
+
+@router.get("/test-price", response_model=dict)
+async def get_test_price():
+    """
+    Get test price setting (public)
+    """
+    try:
+        settings = await db.settings.find_one()
+        if settings:
+            return {
+                "testPrice": settings.get("paymentAmount", 50000),
+                "currency": "IDR"
+            }
+        return {"testPrice": 50000, "currency": "IDR"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+
+
+@router.put("/test-price", response_model=dict)
+async def update_test_price(
+    price_data: dict,
+    token_data: dict = Depends(verify_token)
+):
+    """
+    Update test price (admin only)
+    """
+    try:
+        new_price = price_data.get("testPrice", 50000)
+        
+        settings = await db.settings.find_one()
+        if settings:
+            await db.settings.update_one(
+                {"_id": settings["_id"]},
+                {"$set": {
+                    "paymentAmount": new_price,
+                    "updatedAt": datetime.utcnow(),
+                    "updatedBy": token_data["sub"]
+                }}
+            )
+        else:
+            await db.settings.insert_one({
+                "paymentAmount": new_price,
+                "updatedAt": datetime.utcnow()
+            })
+        
+        return {
+            "success": True,
+            "message": f"Harga test berhasil diubah menjadi Rp {new_price:,}",
+            "testPrice": new_price
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
