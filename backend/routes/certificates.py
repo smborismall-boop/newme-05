@@ -416,58 +416,48 @@ def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -
             y -= line_height
         return y
     
-    # ========== PAGE 1: Main Certificate sesuai template ==========
+    # ========== PAGE 1: Main Certificate ==========
     
-    # Cream background
+    # White/cream background
     c.setFillColorRGB(*cream_rgb)
     c.rect(0, 0, page_width, page_height, fill=1)
     
-    # Black diagonal accent (top-left corner) - seperti di template
-    # Using reportlab path
-    from reportlab.graphics.shapes import Drawing, Polygon
-    from reportlab.graphics import renderPDF
-    
-    # Draw black triangle top-left
+    # ===== TOP LEFT: Black diagonal with yellow dots =====
     path = c.beginPath()
     path.moveTo(0, page_height)
-    path.lineTo(200, page_height)
-    path.lineTo(0, page_height - 150)
+    path.lineTo(180, page_height)
+    path.lineTo(0, page_height - 120)
     path.close()
-    c.setFillColorRGB(0.1, 0.1, 0.1)
+    c.setFillColorRGB(*black_rgb)
     c.drawPath(path, fill=1, stroke=0)
     
-    # Yellow dots pattern di area hitam
+    # Yellow dots pattern in black area
     c.setFillColorRGB(*gold_rgb)
-    for i in range(15):
-        for j in range(10):
-            if i + j < 12:
-                c.circle(20 + i * 12, page_height - 20 - j * 12, 2, fill=1)
+    for row in range(8):
+        for col in range(12):
+            dot_x = 60 + col * 10
+            dot_y = page_height - 15 - row * 10
+            # Only draw dots that are within the black triangle area
+            if dot_x < (180 - row * 15):
+                c.circle(dot_x, dot_y, 2, fill=1)
     
-    # Black triangle bottom-right
-    path2 = c.beginPath()
-    path2.moveTo(page_width, 0)
-    path2.lineTo(page_width - 150, 0)
-    path2.lineTo(page_width, 100)
-    path2.close()
-    c.setFillColorRGB(0.1, 0.1, 0.1)
-    c.drawPath(path2, fill=1, stroke=0)
+    # ===== TOP CENTER: Two oval logos =====
+    # Oval 1: Logo WARNA elemen (left oval)
+    oval1_x, oval1_y = 230, page_height - 55
+    c.setStrokeColorRGB(*black_rgb)
+    c.setLineWidth(2)
+    c.ellipse(oval1_x - 50, oval1_y - 30, oval1_x + 50, oval1_y + 30, stroke=1, fill=0)
+    c.setFillColorRGB(*black_rgb)
+    c.setFont("Helvetica", 10)
+    c.drawCentredString(oval1_x, oval1_y + 8, "Logo")
+    c.drawCentredString(oval1_x, oval1_y - 5, "WARNA")
+    c.drawCentredString(oval1_x, oval1_y - 18, "elemen")
     
-    # Gold geometric pattern di corner bawah kanan
-    c.setStrokeColorRGB(*gold_rgb)
-    c.setLineWidth(1)
-    for i in range(8):
-        c.line(page_width - 140 + i * 15, 10, page_width - 10, 80 - i * 8)
-    
-    # Four-color logo (seperti Google logo style) - top left
-    logo_x, logo_y = 70, page_height - 80
-    c.setFillColorRGB(*red_rgb)
-    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 0, 90, fill=1)
-    c.setFillColorRGB(*gold_rgb)
-    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 90, 90, fill=1)
-    c.setFillColorRGB(*blue_rgb)
-    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 180, 90, fill=1)
-    c.setFillColorRGB(*green_rgb)
-    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 270, 90, fill=1)
+    # Oval 2: Logo NEWME (right oval)
+    oval2_x, oval2_y = 350, page_height - 55
+    c.ellipse(oval2_x - 45, oval2_y - 30, oval2_x + 45, oval2_y + 30, stroke=1, fill=0)
+    c.drawCentredString(oval2_x, oval2_y + 5, "Logo")
+    c.drawCentredString(oval2_x, oval2_y - 10, "NEWME")
     
     # Get analysis data
     personality_type = ai_analysis.get("personalityType", "AMBIVERT")
