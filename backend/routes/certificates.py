@@ -377,17 +377,21 @@ def generate_certificate_pdf(certificate: dict, template: dict) -> BytesIO:
 def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -> BytesIO:
     """
     Generate PDF certificate dengan layout seperti template NEWME CLASS
-    Termasuk 5 Element, Kepribadian, Kekuatan Jatidiri, dll
+    Sesuai dengan design: IMG-20260204-WA0001.jpg sampai IMG-20260205-WA0007.jpg
     """
     buffer = BytesIO()
     
     page_width, page_height = landscape(A4)
     c = canvas.Canvas(buffer, pagesize=landscape(A4))
     
-    # Colors
-    gold_rgb = (0.85, 0.65, 0.13)  # Gold/Yellow
+    # Colors matching template
+    gold_rgb = (0.85, 0.65, 0.13)  # Gold/Yellow accent
     black_rgb = (0, 0, 0)
     gray_rgb = (0.3, 0.3, 0.3)
+    cream_rgb = (0.98, 0.96, 0.90)  # Cream background
+    red_rgb = (0.85, 0.2, 0.2)
+    blue_rgb = (0.2, 0.4, 0.8)
+    green_rgb = (0.2, 0.7, 0.3)
     
     def draw_wrapped_text(c, text, x, y, max_width, font_name, font_size, line_height=None):
         """Helper to draw wrapped text"""
@@ -412,204 +416,253 @@ def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -
             y -= line_height
         return y
     
-    # ========== PAGE 1: Main Certificate ==========
-    # Background
-    c.setFillColorRGB(1, 1, 0.95)  # Light cream
+    # ========== PAGE 1: Main Certificate sesuai template ==========
+    
+    # Cream background
+    c.setFillColorRGB(*cream_rgb)
     c.rect(0, 0, page_width, page_height, fill=1)
     
-    # Gold gradient-like border (top and bottom)
-    c.setFillColorRGB(*gold_rgb)
-    c.rect(0, page_height - 25, page_width, 25, fill=1)
-    c.rect(0, 0, page_width, 25, fill=1)
+    # Black diagonal accent (top-left corner) - seperti di template
+    c.setFillColorRGB(0.1, 0.1, 0.1)
+    c.beginPath()
+    c.moveTo(0, page_height)
+    c.lineTo(200, page_height)
+    c.lineTo(0, page_height - 150)
+    c.closePath()
+    c.fill()
     
-    # Inner border
+    # Yellow dots pattern di area hitam
+    c.setFillColorRGB(*gold_rgb)
+    for i in range(15):
+        for j in range(10):
+            if i + j < 12:
+                c.circle(20 + i * 12, page_height - 20 - j * 12, 2, fill=1)
+    
+    # Black diagonal accent (bottom-right corner)
+    c.setFillColorRGB(0.1, 0.1, 0.1)
+    c.beginPath()
+    c.moveTo(page_width, 0)
+    c.lineTo(page_width - 150, 0)
+    c.lineTo(page_width, 100)
+    c.closePath()
+    c.fill()
+    
+    # Gold geometric pattern di corner bawah kanan
     c.setStrokeColorRGB(*gold_rgb)
-    c.setLineWidth(2)
-    c.rect(15, 35, page_width - 30, page_height - 70, stroke=1, fill=0)
+    c.setLineWidth(1)
+    for i in range(8):
+        c.line(page_width - 140 + i * 15, 10, page_width - 10, 80 - i * 8)
     
-    # Logo placeholder (left side)
+    # Four-color logo (seperti Google logo style) - top left
+    logo_x, logo_y = 70, page_height - 80
+    c.setFillColorRGB(*red_rgb)
+    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 0, 90, fill=1)
     c.setFillColorRGB(*gold_rgb)
-    c.setFont("Helvetica-Bold", 24)
-    c.drawString(40, page_height - 80, "NEWME")
-    c.setFont("Helvetica", 10)
-    c.drawString(40, page_height - 95, "CLASS")
-    c.setFont("Helvetica-Oblique", 8)
-    c.drawString(40, page_height - 108, "Jatidirimu di Sini")
+    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 90, 90, fill=1)
+    c.setFillColorRGB(*blue_rgb)
+    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 180, 90, fill=1)
+    c.setFillColorRGB(*green_rgb)
+    c.wedge(logo_x - 15, logo_y - 15, logo_x + 15, logo_y + 15, 270, 90, fill=1)
     
-    # Title Section (right side)
-    c.setFillColorRGB(*black_rgb)
-    c.setFont("Helvetica-Bold", 36)
-    c.drawRightString(page_width - 40, page_height - 70, "SERTIFIKAT")
-    c.setFont("Helvetica", 12)
-    c.drawRightString(page_width - 40, page_height - 88, "ANALISA KEPRIBADIAN & JATIDIRI")
-    
-    # Certificate number
-    cert_number = f"1-{datetime.utcnow().strftime('%m.%d')}-{str(user.get('_id', ''))[-6:]}"
-    c.setFont("Helvetica", 10)
-    c.drawRightString(page_width - 40, page_height - 105, cert_number)
-    
-    # Sub header
-    c.setFont("Helvetica", 11)
-    c.drawCentredString(page_width/2, page_height - 130, "OPTIMALKAN VERSI TERBAIK_MU")
-    
-    # User Name (large, centered)
-    recipient_name = user.get("fullName", "Pengguna")
-    c.setFont("Helvetica-Bold", 28)
-    c.drawCentredString(page_width/2, page_height - 165, recipient_name)
-    
-    # Dominant Type
-    dominant_type = ai_analysis.get("dominantType", "DOMINAN")
-    c.setFont("Helvetica-Bold", 14)
-    c.drawCentredString(page_width/2, page_height - 190, f"- {dominant_type} -")
-    
-    # Personality Type and Element (two columns)
+    # Get analysis data
     personality_type = ai_analysis.get("personalityType", "AMBIVERT")
     dominant_element = ai_analysis.get("dominantElement", "AIR")
+    dominant_type = ai_analysis.get("dominantType", "SI ADAPTIF")
+    result_category = ai_analysis.get("resultCategory", "aAi")
     element_scores = ai_analysis.get("elementScores", {})
+    recipient_name = user.get("fullName", "Pengguna")
     
-    # Get dominant element percentage
+    # Get dominant percentage
     dominant_pct = 0
-    dominant_label = "SI ADAPTIF"
+    dominant_label = dominant_type
     if dominant_element in element_scores:
         dominant_pct = element_scores[dominant_element].get("percentage", 0)
-        dominant_label = element_scores[dominant_element].get("label", "SI ADAPTIF")
+        dominant_label = element_scores[dominant_element].get("label", dominant_type)
     
-    # Left column header: Kepribadian
-    c.setFont("Helvetica", 10)
-    c.drawString(60, page_height - 215, "Kepribadian:")
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(60, page_height - 235, f"{personality_type} (#)")
-    
-    # Right column header: Simbol Karakter
-    c.drawString(page_width/2 + 50, page_height - 215, "Simbol Karakter:")
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(page_width/2 + 50, page_height - 235, f"{dominant_element} ({dominant_label})")
-    c.setFont("Helvetica", 12)
-    c.drawString(page_width/2 + 50, page_height - 252, f"{dominant_pct:.2f} %")
-    
-    # Symbol display (like -aA-)
-    c.setFont("Helvetica-Bold", 20)
-    c.drawCentredString(page_width/2, page_height - 275, f"- {personality_type[0].lower()}{dominant_element[0].upper()} -")
-    
-    # ========== Three Column Layout ==========
-    col_width = (page_width - 100) / 3
-    col1_x = 50
-    col2_x = 50 + col_width + 15
-    col3_x = 50 + (col_width + 15) * 2
-    y_start = page_height - 310
-    
-    # Column 1: KEPRIBADIAN
+    # Certificate Title - Right side
     c.setFillColorRGB(*black_rgb)
-    c.setFont("Helvetica-Bold", 10)
-    c.drawString(col1_x, y_start, "KEPRIBADIAN:")
+    c.setFont("Helvetica-Bold", 28)
+    c.drawRightString(page_width - 40, page_height - 50, "SERTIFIKAT")
+    c.setFont("Helvetica", 11)
+    c.drawRightString(page_width - 40, page_height - 68, "ANALISA KEPRIBADIAN & JATIDIRI")
     
-    kepribadian = ai_analysis.get("kepribadian", ["Responsif", "Investigatif", "Aktif", "Peka", "Sensitif"])
+    # NEW ME Logo and tagline - below four-color logo
+    c.setFillColorRGB(*black_rgb)
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(50, page_height - 120, "NEW ME")
+    c.setFont("Helvetica", 8)
+    c.drawString(50, page_height - 132, "Jatidiri di sini")
+    
+    # ID Number
+    cert_id = f"ID: NM-{datetime.utcnow().strftime('%Y%m%d')}-{str(user.get('_id', ''))[-6:].upper()}"
+    c.setFont("Helvetica", 9)
+    c.drawRightString(page_width - 40, page_height - 85, cert_id)
+    
+    # Tagline
+    c.setFont("Helvetica-Oblique", 10)
+    c.drawRightString(page_width - 40, page_height - 100, "Optimalkan versi terbaik_mu")
+    
+    # ========== Two Column Layout ==========
+    col1_x = 50  # Left column
+    col2_x = page_width / 2 + 30  # Right column
+    y_start = page_height - 160
+    
+    # ===== LEFT COLUMN =====
+    # Kepribadian section
+    c.setFillColorRGB(*black_rgb)
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(col1_x, y_start, "Kepribadian :")
+    
+    kepribadian_desc = ai_analysis.get("kepribadian", [
+        "Extra Responsif", "bahasa IMAGINASI", "kurang investigatif",
+        "extra pasif", "lebih sensitif", "mudah tersinggung"
+    ])
     y = y_start - 15
     c.setFont("Helvetica", 8)
-    for trait in kepribadian[:8]:
-        c.drawString(col1_x + 5, y, trait)
-        y -= 11
+    kepribadian_text = ", ".join(kepribadian_desc[:6])
+    y = draw_wrapped_text(c, kepribadian_text, col1_x, y, 280, "Helvetica", 8, 11)
     
-    # CIRI KHAS section
-    y -= 10
-    c.setFont("Helvetica-Bold", 10)
-    c.drawString(col1_x, y, "CIRI KHAS:")
+    # +/- Karakter section
     y -= 15
-    c.setFont("Helvetica", 8)
-    ciri_khas = ai_analysis.get("ciriKhas", ["Penampil", "Entertainer", "Kulineran", "BB Stabil"])
-    for ciri in ciri_khas[:6]:
-        c.drawString(col1_x + 5, y, ciri)
-        y -= 11
-    
-    # KARAKTER section
-    y -= 10
     c.setFont("Helvetica-Bold", 10)
-    c.drawString(col1_x, y, "(+/-) KARAKTER:")
+    c.drawString(col1_x, y, "+/- Karakter :")
+    y -= 13
+    c.setFont("Helvetica", 7)
+    karakter = ai_analysis.get("karakter", [
+        "Pemerhati", "suka beda", "imaginatif", "suka hal baru",
+        "percaya diri", "romantis", "perfectionis", "penuntut idealisme"
+    ])
+    karakter_text = " - ".join(karakter[:10])
+    y = draw_wrapped_text(c, karakter_text, col1_x, y, 280, "Helvetica", 7, 10)
+    
+    # Kekuatan Jatidiri section
     y -= 15
-    c.setFont("Helvetica", 8)
-    c.drawString(col1_x + 5, y, f"{dominant_element}/TENANG")
-    y -= 11
-    karakter = ai_analysis.get("karakter", ["Pengamat", "Performer", "Investigator"])
-    for kar in karakter[:5]:
-        c.drawString(col1_x + 5, y, kar)
-        y -= 11
-    
-    # Column 2: Kekuatan JATIDIRI
     c.setFont("Helvetica-Bold", 10)
-    c.drawString(col2_x, y_start, "Kekuatan JATIDIRI")
+    c.drawString(col1_x, y, f"Kekuatan Jatidiri : {dominant_label}")
     
     kekuatan = ai_analysis.get("kekuatanJatidiri", {})
-    y = y_start - 15
+    y -= 15
     c.setFont("Helvetica", 8)
-    
     jatidiri_items = [
-        ("1- Kehidupan:", kekuatan.get("kehidupan", "RELA BERKORBAN")),
-        ("2- Kesehatan:", kekuatan.get("kesehatan", "JANTUNG")),
-        ("3- Kontribusi:", kekuatan.get("kontribusi", "PERDAMAIAN")),
-        ("4- Kekhasan:", kekuatan.get("kekhasan", "TATAPAN")),
-        ("5- Kharisma:", kekuatan.get("kharisma", "SENYUMAN")),
+        f"Kehidupan : {kekuatan.get('kehidupan', 'KAYA GAGASAN')}",
+        f"Kesehatan : {kekuatan.get('kesehatan', 'PENCERNAAN')}",
+        f"Kontribusi : {kekuatan.get('kontribusi', 'KREATIFITAS')}",
+        f"Kekhasan : {kekuatan.get('kekhasan', 'BERBEDA')}",
+        f"Kharisma : {kekuatan.get('kharisma', 'INSPIRATIF')}"
     ]
+    for item in jatidiri_items:
+        c.drawString(col1_x, y, item)
+        y -= 11
     
-    for label, value in jatidiri_items:
-        c.drawString(col2_x, y, f"{label} {value}")
-        y -= 12
-    
-    # Kompilasi ADAPTASI
+    # Kompilasi Adaptasi section
     y -= 10
     c.setFont("Helvetica-Bold", 10)
-    c.drawString(col2_x, y, "Kompilasi ADAPTASI")
-    y -= 15
+    c.drawString(col1_x, y, "Kompilasi Adaptasi :")
+    y -= 13
     c.setFont("Helvetica", 7)
     
     kompilasi = ai_analysis.get("kompilasiAdaptasi", [
-        "Belajar: Merangkum", "Bekerja: Bebas dalam aturan", "Kalibrasi: Ganti Suasana",
-        "Daya Raga: Refleks Emosi", "Memimpin: Org. Swadaya/Seni", "Jalur Bisnis: Pemodal",
-        "Pendukung Karir: Serba Bisa", "Keahlian: Mendaramaikan", "Karya: Inspirator Kemanusiaan"
+        "Belajar: Mengimajinasikan", "Bekerja: Bebas", "Kalibrasi: Variasi",
+        "Daya Raga: Tidur/nonton", "Memimpin: Organisasi Cipta", "Jalur Bisnis: Owner",
+        "Pendukung karir: Komunikator", "Keahlian: Negosiator", "Karya: Inovatif",
+        "Keunggulan: Menggambarkan", "Keutamaan: Kesempurnaan", "Tanggung jawab: Magnet"
     ])
     
-    for i, item in enumerate(kompilasi[:15], 1):
-        c.drawString(col2_x, y, f"{i}- {item}")
-        y -= 10
+    for i, item in enumerate(kompilasi[:12]):
+        c.drawString(col1_x, y, f"• {item}")
+        y -= 9
     
-    # Column 3: Orientasi / Other Elements
+    # ===== RIGHT COLUMN =====
+    # Big Symbol Display (like eK, iA, etc)
+    symbol_code = result_category if result_category else f"{personality_type[0].lower()}{dominant_element[0].upper()}"
+    
+    # Draw big parentheses with symbol
+    c.setFillColorRGB(*gold_rgb)
+    c.setFont("Helvetica-Bold", 72)
+    c.drawCentredString(col2_x + 100, y_start - 50, f"({symbol_code})")
+    
+    # Kepribadian type
+    c.setFillColorRGB(*black_rgb)
+    c.setFont("Helvetica", 10)
+    c.drawString(col2_x + 20, y_start - 100, "Kepribadian :")
+    c.setFillColorRGB(*gold_rgb)
+    c.setFont("Helvetica-Bold", 18)
+    c.drawString(col2_x + 20, y_start - 120, personality_type)
+    
+    # Simbol Jatidiri section
+    y = y_start - 150
+    c.setFillColorRGB(*black_rgb)
     c.setFont("Helvetica-Bold", 10)
-    c.drawString(col3_x, y_start, "Orientasi")
+    c.drawString(col2_x + 20, y, "Simbol Jatidiri :")
+    
+    # Show dominant elements with percentages
+    y -= 18
     c.setFont("Helvetica", 9)
-    c.drawString(col3_x, y_start - 15, "Kamu yang lain:")
     
-    y = y_start - 35
-    # Show other elements with percentages
-    for element, data in element_scores.items():
-        if element != dominant_element:
-            pct = data.get("percentage", 0)
-            label = data.get("label", "")
-            c.setFont("Helvetica-Bold", 11)
-            c.drawString(col3_x, y, element)
-            c.setFont("Helvetica", 9)
-            c.drawString(col3_x + 50, y, f"({label})")
-            c.drawString(col3_x, y - 12, f"{pct:.2f} %")
-            y -= 35
+    # Sort elements by percentage
+    sorted_elements = sorted(element_scores.items(), key=lambda x: x[1].get('percentage', 0), reverse=True)
     
-    # Footer with quote
-    y -= 20
-    c.setFont("Helvetica-Oblique", 8)
-    quote = f'"JATIDIRI {dominant_type.lower()}_mu,'
-    c.drawString(col3_x, y, quote)
-    c.drawString(col3_x, y - 10, 'adalah versi TERBAIK_mu"')
+    for i, (elem, data) in enumerate(sorted_elements[:3]):
+        pct = data.get('percentage', 0)
+        label = data.get('label', '')
+        c.setFont("Helvetica-Bold", 10)
+        c.drawString(col2_x + 20, y, f"Dominan {['I', 'II', 'III'][i]}")
+        c.setFillColorRGB(*gold_rgb)
+        c.drawString(col2_x + 80, y, elem)
+        c.setFillColorRGB(*black_rgb)
+        c.setFont("Helvetica", 9)
+        c.drawString(col2_x + 130, y, f"{pct:.2f} %")
+        y -= 18
     
-    # Bottom footer
+    # Ciri khas section
+    y -= 10
     c.setFont("Helvetica-Bold", 10)
-    c.drawString(col3_x, 60, "NEW ME CLASS")
+    c.drawString(col2_x + 20, y, "Ciri khas :")
+    y -= 15
     c.setFont("Helvetica", 8)
-    c.drawString(col3_x, 48, "- Jatidirimu di Sini -")
+    ciri_khas = ai_analysis.get("ciriKhas", [
+        "Menarik", "Tampil Beda", "Charming",
+        "Berat Badan cenderung stabil", "Bicara nambah wawasan"
+    ])
+    for ciri in ciri_khas[:5]:
+        c.drawString(col2_x + 20, y, f"• {ciri}")
+        y -= 11
     
-    # Contact info
+    # Dibutuhkan pada profesi
+    y -= 10
+    c.setFont("Helvetica-Bold", 10)
+    c.drawString(col2_x + 20, y, "Dibutuhkan pada profesi :")
+    y -= 13
     c.setFont("Helvetica", 8)
-    c.drawRightString(page_width - 40, 50, "0895.0267.1691")
+    profesi_text = f"Yang memerlukan {kekuatan.get('kontribusi', 'KREATIFITAS')} & SISTEM"
+    c.drawString(col2_x + 20, y, profesi_text)
     
-    # Note at bottom left
-    c.setFont("Helvetica-Oblique", 7)
-    c.drawString(50, 45, "Catt: Point positif only, negatif by private.")
+    # ===== FOOTER =====
+    # NEW ME logo small (bottom left)
+    c.setFillColorRGB(*black_rgb)
+    c.setFont("Helvetica-Bold", 12)
+    c.drawString(50, 70, "NEW ME")
+    c.setFont("Helvetica", 7)
+    c.drawString(50, 58, "Jatidiri di sini")
+    
+    # Signature section
+    c.setFont("Helvetica", 10)
+    c.drawString(150, 70, "_________________")
+    c.setFont("Helvetica-Bold", 10)
+    c.drawString(150, 55, "- ABIE DIBYO -")
+    c.setFont("Helvetica", 8)
+    c.drawString(150, 43, "Chairman & B. Development")
+    
+    # Production info (bottom right)
+    c.setFont("Helvetica", 7)
+    c.drawRightString(page_width - 60, 45, "Production by")
+    c.setFont("Helvetica-Bold", 9)
+    c.drawRightString(page_width - 60, 32, "S L")
+    
+    # Note
+    c.setFillColorRGB(0.5, 0.5, 0.5)
+    c.setFont("Helvetica-Oblique", 6)
+    c.drawString(50, 25, "Catt: Point positif only, negatif by private.")
     
     # ========== PAGE 2: Detailed Analysis ==========
     c.showPage()
