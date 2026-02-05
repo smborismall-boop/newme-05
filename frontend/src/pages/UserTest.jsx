@@ -29,7 +29,7 @@ const UserTest = () => {
   const [walletBalance, setWalletBalance] = useState(0);
   const [hasPaidAccess, setHasPaidAccess] = useState(false);
   const [hasUsedFreeTest, setHasUsedFreeTest] = useState(false);
-  const [testPrice] = useState(50000); // Harga test berbayar
+  const [testPrice, setTestPrice] = useState(50000); // Default, akan diupdate dari settings
 
   useEffect(() => {
     checkAuth();
@@ -54,6 +54,14 @@ const UserTest = () => {
 
   const loadAllData = async (userId) => {
     try {
+      // Load test price from settings
+      try {
+        const priceRes = await axios.get(`${BACKEND_URL}/api/settings/test-price`);
+        setTestPrice(priceRes.data.testPrice || 50000);
+      } catch (e) {
+        console.log('Using default price');
+      }
+      
       // Load questions
       const questionsRes = await axios.get(`${BACKEND_URL}/api/questions`);
       const allQuestions = questionsRes.data || [];
