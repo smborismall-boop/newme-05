@@ -423,13 +423,18 @@ def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -
     c.rect(0, 0, page_width, page_height, fill=1)
     
     # Black diagonal accent (top-left corner) - seperti di template
+    # Using reportlab path
+    from reportlab.graphics.shapes import Drawing, Polygon
+    from reportlab.graphics import renderPDF
+    
+    # Draw black triangle top-left
+    path = c.beginPath()
+    path.moveTo(0, page_height)
+    path.lineTo(200, page_height)
+    path.lineTo(0, page_height - 150)
+    path.close()
     c.setFillColorRGB(0.1, 0.1, 0.1)
-    c.beginPath()
-    c.moveTo(0, page_height)
-    c.lineTo(200, page_height)
-    c.lineTo(0, page_height - 150)
-    c.closePath()
-    c.fill()
+    c.drawPath(path, fill=1, stroke=0)
     
     # Yellow dots pattern di area hitam
     c.setFillColorRGB(*gold_rgb)
@@ -438,14 +443,14 @@ def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -
             if i + j < 12:
                 c.circle(20 + i * 12, page_height - 20 - j * 12, 2, fill=1)
     
-    # Black diagonal accent (bottom-right corner)
+    # Black triangle bottom-right
+    path2 = c.beginPath()
+    path2.moveTo(page_width, 0)
+    path2.lineTo(page_width - 150, 0)
+    path2.lineTo(page_width, 100)
+    path2.close()
     c.setFillColorRGB(0.1, 0.1, 0.1)
-    c.beginPath()
-    c.moveTo(page_width, 0)
-    c.lineTo(page_width - 150, 0)
-    c.lineTo(page_width, 100)
-    c.closePath()
-    c.fill()
+    c.drawPath(path2, fill=1, stroke=0)
     
     # Gold geometric pattern di corner bawah kanan
     c.setStrokeColorRGB(*gold_rgb)
