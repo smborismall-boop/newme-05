@@ -376,29 +376,27 @@ def generate_certificate_pdf(certificate: dict, template: dict) -> BytesIO:
 
 def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -> BytesIO:
     """
-    Generate PDF certificate dengan layout seperti template NEWME CLASS
-    Sesuai dengan design: IMG-20260204-WA0001.jpg sampai IMG-20260205-WA0007.jpg
+    Generate PDF certificate sesuai template NEWME CLASS
+    Template: IMG-20260205-WA0012.jpg
     """
     buffer = BytesIO()
     
     page_width, page_height = landscape(A4)
     c = canvas.Canvas(buffer, pagesize=landscape(A4))
     
-    # Colors matching template
+    # Colors matching template exactly
     gold_rgb = (0.85, 0.65, 0.13)  # Gold/Yellow accent
-    black_rgb = (0, 0, 0)
-    gray_rgb = (0.3, 0.3, 0.3)
-    cream_rgb = (0.98, 0.96, 0.90)  # Cream background
-    red_rgb = (0.85, 0.2, 0.2)
-    blue_rgb = (0.2, 0.4, 0.8)
-    green_rgb = (0.2, 0.7, 0.3)
+    black_rgb = (0.1, 0.1, 0.1)
+    white_rgb = (1, 1, 1)
+    cream_rgb = (0.99, 0.98, 0.95)  # Very light cream/white background
+    blue_rgb = (0.2, 0.5, 0.7)  # NEW ME logo blue
     
     def draw_wrapped_text(c, text, x, y, max_width, font_name, font_size, line_height=None):
         """Helper to draw wrapped text"""
         if line_height is None:
             line_height = font_size + 2
         c.setFont(font_name, font_size)
-        words = text.split()
+        words = str(text).split()
         lines = []
         current_line = ""
         for word in words:
