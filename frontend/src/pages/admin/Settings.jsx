@@ -117,6 +117,42 @@ const Settings = () => {
         </Button>
       </div>
 
+      {/* Test Price Settings - NEW */}
+      <Card className="bg-[#2a2a2a] border-green-400/30">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center space-x-2">
+            <span className="text-2xl">💰</span>
+            <span>Harga Test Premium</span>
+          </CardTitle>
+          <CardDescription className="text-gray-400">Atur harga test berbayar untuk user</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="text-white">Harga Test Premium (IDR)</Label>
+              <Input
+                type="number"
+                value={settings.paymentAmount || 50000}
+                onChange={(e) => handleChange('paymentAmount', parseInt(e.target.value) || 0)}
+                className="bg-[#1a1a1a] text-white text-lg font-bold"
+                placeholder="50000"
+              />
+              <p className="text-gray-400 text-xs mt-1">
+                Format: Rp {(settings.paymentAmount || 50000).toLocaleString('id-ID')}
+              </p>
+            </div>
+            <div className="flex items-end">
+              <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 w-full">
+                <p className="text-green-400 text-sm">Harga akan berlaku untuk semua user baru</p>
+                <p className="text-white font-bold text-xl mt-1">
+                  Rp {(settings.paymentAmount || 50000).toLocaleString('id-ID')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Site Info */}
       <Card className="bg-[#2a2a2a] border-yellow-400/20">
         <CardHeader>
