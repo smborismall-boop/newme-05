@@ -266,6 +266,57 @@ class NewmeClassAPITester:
             test_analysis_data
         )
 
+    def test_get_test_price(self):
+        """Test GET /api/settings/test-price - should return test price"""
+        return self.run_api_test(
+            "Get Test Price",
+            "GET",
+            "api/settings/test-price",
+            200
+        )
+
+    def test_update_test_price(self):
+        """Test PUT /api/settings/test-price - admin can update price (requires admin token)"""
+        if not self.token:
+            print("    ⚠️  Skipping test price update - no auth token")
+            return False, {}
+        
+        price_data = {
+            "testPrice": 75000
+        }
+        
+        return self.run_api_test(
+            "Update Test Price (Admin)",
+            "PUT",
+            "api/settings/test-price",
+            200,
+            price_data
+        )
+
+    def test_payment_status_check(self):
+        """Test GET /api/user-payments/status/{userId} - check payment status"""
+        # Use a dummy user ID for testing
+        test_user_id = "507f1f77bcf86cd799439011"  # Valid ObjectId format
+        
+        return self.run_api_test(
+            "Check Payment Status",
+            "GET",
+            f"api/user-payments/status/{test_user_id}",
+            200
+        )
+
+    def test_check_free_test_usage(self):
+        """Test GET /api/test-results/check-free-test/{userId} - check if user used free test"""
+        # Use a dummy user ID for testing
+        test_user_id = "507f1f77bcf86cd799439011"  # Valid ObjectId format
+        
+        return self.run_api_test(
+            "Check Free Test Usage",
+            "GET",
+            f"api/test-results/check-free-test/{test_user_id}",
+            200
+        )
+
     def run_all_tests(self):
         """Run all API tests"""
         print("🚀 Starting NEWME CLASS API Tests")
