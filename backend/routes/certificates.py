@@ -472,28 +472,28 @@ def generate_ai_certificate_pdf(user: dict, ai_analysis: dict, template: dict) -
         dominant_pct = element_scores[dominant_element].get("percentage", 0)
         dominant_label = element_scores[dominant_element].get("label", dominant_type)
     
-    # Certificate Title - Right side
+    # ===== TOP RIGHT: Title section =====
     c.setFillColorRGB(*black_rgb)
-    c.setFont("Helvetica-Bold", 28)
-    c.drawRightString(page_width - 40, page_height - 50, "SERTIFIKAT")
-    c.setFont("Helvetica", 11)
-    c.drawRightString(page_width - 40, page_height - 68, "ANALISA KEPRIBADIAN & JATIDIRI")
+    c.setFont("Helvetica-Bold", 32)
+    c.drawRightString(page_width - 40, page_height - 45, "SERTIFIKAT")
+    c.setFont("Helvetica", 12)
+    c.drawRightString(page_width - 40, page_height - 65, "ANALISA KEPRIBADIAN & JATIDIRI")
     
-    # NEW ME Logo and tagline - below four-color logo
-    c.setFillColorRGB(*black_rgb)
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(50, page_height - 120, "NEW ME")
-    c.setFont("Helvetica", 8)
-    c.drawString(50, page_height - 132, "Jatidiri di sini")
+    # ID field
+    cert_id = f"NM-{datetime.utcnow().strftime('%Y%m%d')}-{str(user.get('_id', ''))[-6:].upper()}"
+    c.setFont("Helvetica", 10)
+    c.drawRightString(page_width - 40, page_height - 90, f"ID {cert_id}")
     
-    # ID Number
-    cert_id = f"ID: NM-{datetime.utcnow().strftime('%Y%m%d')}-{str(user.get('_id', ''))[-6:].upper()}"
-    c.setFont("Helvetica", 9)
-    c.drawRightString(page_width - 40, page_height - 85, cert_id)
+    # Dotted line under ID
+    c.setStrokeColorRGB(0.5, 0.5, 0.5)
+    c.setDash(2, 2)
+    c.line(page_width - 200, page_height - 95, page_width - 40, page_height - 95)
+    c.setDash()
     
     # Tagline
-    c.setFont("Helvetica-Oblique", 10)
-    c.drawRightString(page_width - 40, page_height - 100, "Optimalkan versi terbaik_mu")
+    c.setFillColorRGB(*gold_rgb)
+    c.setFont("Helvetica-Oblique", 11)
+    c.drawRightString(page_width - 40, page_height - 115, "Optimalkan versi terbaik_mu")
     
     # ========== Two Column Layout ==========
     col1_x = 50  # Left column
